@@ -6,6 +6,12 @@ pipeline{
                 sh 'mvn clean package'
                 sh "docker build . -t tomcat_webapp:${env.BUILD_ID}"
             }
+            post{
+                success{
+                    echo 'Now Archiving...'
+                    archiveArtifacts artifacts: '**/target/*.war' 
+                }
+            }
         }
     }
 }
